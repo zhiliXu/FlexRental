@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>FlexRental</h1>
+    <p class="lead">Welcome to FlexRental. We sell used properties nationwide. You can definitely find what you want here!</p>
+    <p>@Html.ActionLink(HttpUtility.HtmlDecode("Find more &raquo;"), "Search", "Buyer", new { }, new { @class = "btn btn-primary btn-lg" })</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            Set up an account with us. It's a easy way to store your shopping cart, keep track of orders within our website.
+        </p>
+        <p>@Html.ActionLink(HttpUtility.HtmlDecode("Find more &raquo;"), "Register", "Account", new { }, new { @class = "btn btn-default" })</p>
+       </div>
+    <div class="col-md-4">
+        <h2>Our business</h2>
+        <p>Your business is our business. FlexRental aims to create a unique environment for the communications between sellers and buyers.</p>
+        <p>@Html.ActionLink(HttpUtility.HtmlDecode("Find more &raquo;"), "About", "Home", new { }, new { @class = "btn btn-default" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Ads</h2>
+        <p>random ads can be put here! </p>
+        <p>random ads can be put here! </p>
+        <p>random ads can be put here! </p>
+        <p>@Html.ActionLink(HttpUtility.HtmlDecode("Find more &raquo;"), "Contact", "Home", new { }, new { @class = "btn btn-default" })</p>
+    </div>
+</div>

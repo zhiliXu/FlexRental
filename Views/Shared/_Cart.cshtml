@@ -1,0 +1,36 @@
+﻿<div id="mainCartPart">
+    @{
+        List<FlexRental.Controllers.OrderItems> items = (List<FlexRental.Controllers.OrderItems>)Session["cart"];
+        decimal total = 0;
+        if (items != null)
+        {
+            foreach (FlexRental.Controllers.OrderItems item in items)
+            {
+                var subtotal = item.Item.Price * item.Quantity;
+                total = total + subtotal;
+                <ul class="cd-cart-items">
+                    <li>
+                        <span class="cd-qty">@item.Quantity x</span> @Html.ActionLink((string)@item.Item.Name, "Details", "Buyer", new { id = @item.Item.InventoryId }, null)
+                        <div class="cd-price">$@(subtotal)</div>
+
+                        @*@using (Html.BeginForm("RemoveFromCart", "Buyer"))
+                            {
+                                @Html.Hidden("itemID", item.Item.InventoryId)
+                                <input id="removeFromCart" type="submit" value="" class="cd-item-remove cd-img-replace" />
+                            }
+                            <a href=@Url.Content("~/Buyer/RemoveFromCart") class="cd-item-remove cd-img-replace">Remove</a>*@
+                    </li>
+                </ul> <!-- cd-cart-items -->
+            }
+        }
+        else
+        {
+            <ul class="cd-cart-items">
+                <li>Empty</li>
+            </ul> <!-- cd-cart-items -->
+        }
+        <div class="cd-cart-total">
+            <p>Total <span>$@(total)</span></p>
+        </div> <!-- cd-cart-total -->
+    }
+</div>

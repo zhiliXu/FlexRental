@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@if (Request.IsAuthenticated)
+{
+    var identity = (ClaimsIdentity)User.Identity;
+    var name = identity.FindFirstValue(ClaimTypes.GivenName) ?? identity.GetUserName();
+    var role = identity.FindFirstValue(ClaimTypes.Role) ?? "Buyer";
+    ViewBag.status = "Hello, " + name + " !";
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+   
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@ViewBag.status<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("My Profile", "Index", "Manage")</li>
+                    <li>@Html.ActionLink("My Orders", "Order", "Buyer")</li>
+                    @if (role.Equals("Seller"))
+                    {
+                        <li>@Html.ActionLink("My Store", "Index", "Inventory")</li>
+                    }
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+            </li>
+        </ul>
+        </div>
+    <div id="cd-cart-trigger">
+        <a class="cd-img-replace" href="~/images/icon-cart.png">Cart</a>
+    </div>
+    }
+}
+else
+{
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+        }

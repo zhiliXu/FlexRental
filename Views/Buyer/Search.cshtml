@@ -1,0 +1,25 @@
+﻿@model IEnumerable<FlexRental.Models.ListViewModel>
+
+@{
+    ViewBag.Title = "Search";
+}
+<div class="gridContainer">
+    @if (Model.Count() < 1)
+    {
+        <h3>Nothing is found!</h3>
+    }
+    else { 
+    foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <figure>
+                <img id="gridImage" src=@Url.Content( item.ImageUrl) height="200" width="200" >
+                <figcaption>
+                    @Html.ActionLink(item.Name, "Details", new { id = item.InventoryID }, new { @class = "itemNameLink" })
+                </figcaption>
+            </figure>
+        </div>
+    }
+    }
+</div>
+

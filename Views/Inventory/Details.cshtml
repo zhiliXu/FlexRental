@@ -1,0 +1,139 @@
+﻿@model FlexRental.Models.InventoryDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+
+<div style="float:right; margin-right:10%">
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.InventoryId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.InventoryId }, new { @id = "deleteLink" }) |
+        @Html.ActionLink("Back to List", "InventoryIndex")
+    </p>
+</div>
+    <hr style="margin-top:2%" />
+
+    <div class="row" style="margin-left:18%">
+        <div>
+            <dl class="dl-horizontal col-md-4">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Category)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Color)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Color)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Year)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Year)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Condition)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Condition)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Brand)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Brand)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Quantity)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Material)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Material)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Status)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Status)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+
+             
+            </dl>
+            
+        </div>
+        <div class="slideShow col-md-4" style="margin-left:5%">
+            @foreach (var image in Model.Images)
+            {
+                <img src="@Url.Content(image)" height="294" width="294" />
+            }
+        </div>
+       
+
+
+</div>
+<h3 style="margin-left:15%">@Html.DisplayNameFor(model => model.Description)</h3>
+<hr style="width:80%; height:3px; background-color:black " />
+<h5 style="margin-left:15%; width:70%">
+    @Html.DisplayFor(model => model.Description)
+</h5>
+
+
+@section PageScripts{
+    <script src="~/Scripts/jquery.cycle2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".slideShow").cycle({ fx: 'fade' });
+        });
+    </script>
+}
+

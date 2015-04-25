@@ -1,0 +1,14 @@
+﻿@model FlexRental.Models.InventoryView
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Welcome to your warehouse</h2>
+<div style=" padding-left:1px; height:150px; width:200px; margin-top: 10%; margin-left:40%; border-color:coral; border-style:groove; border-width:medium">
+    <h4>Do you want to:</h4>
+    @Html.ActionLink("See the Inventory List", "InventoryIndex", new { }, new { @class = "btn btn-default" });
+    <br />
+    @Html.ActionLink("Add new Item", "Create", new { }, new { @class = "btn btn-default" });
+</div>
+

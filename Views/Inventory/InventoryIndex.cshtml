@@ -1,0 +1,73 @@
+﻿@model IEnumerable<FlexRental.Models.InventoyIndexViewModel>
+
+@{
+    ViewBag.Title = "InventoryIndex";
+}
+
+<h2>InventoryIndex</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Condition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan="5">You currently have nothing listed!</td>
+        </tr>
+    }
+    else { 
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Condition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.InventoryID } ) |
+                @Html.ActionLink("Details", "Details", new { id = item.InventoryID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.InventoryID },new { @id = "deleteLink" })
+            </td>
+        </tr>
+    }
+    }
+</table>
+@section PageScripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#deleteLink").click(function(event){
+                var answer = confirm("Do you want delete this item?");
+            });
+        });
+        </script>
+}
+

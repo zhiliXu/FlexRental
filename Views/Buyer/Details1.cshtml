@@ -1,0 +1,155 @@
+﻿@model FlexRental.Models.InventoryDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="alert alert-success">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Well done!</strong> You successfully read this important alert message.
+</div>
+<div class="alert alert-danger">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Oh Snap!</strong> Quantity must be specified.
+</div>
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+<div class="pull-right">
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+
+<hr />
+
+<div class="row">
+    <div>
+        <dl class="dl-horizontal col-md-4">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Color)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Color)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Year)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Year)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Condition)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Condition)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Brand)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Brand)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Material)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Material)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+        </dl>
+    </div>
+    <div class="slideShow col-md-4">
+        @foreach (var image in Model.Images)
+        {
+            <img src="@Url.Content(image)" height="294" width="294" />
+        }
+    </div>
+</div>
+<div class="addToCartContainer">
+    @using (Html.BeginForm("AddToCart", "Buyer"))
+    {
+        <span>
+            <input id="amount" name="amount" type="text" placeholder="Enter Quantity" />
+            @Html.ValidationMessage("amount")
+        </span>
+        @Html.Hidden("itemID", Model.InventoryId)
+        <input id="addToCart" type="submit" value="Add To Cart" class="btn btn-default" />
+    }
+</div>
+
+@section PageScripts{
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.cycle2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#addToCart').click(function () {
+
+                var form = $(this).parent("form");
+
+                $.ajax({
+                    type: "POST",
+                    url: form.attr('action'),
+                    data: form.serialize()
+                })
+                    .success(function (html) {
+                        $(".alert-success").show();
+
+                        setTimeout(function () {
+                            $(".alert-success").hide();
+                        }, 2000);
+                        
+                        $("#cd-cart").replaceWith(html);
+
+                            initialCart($);
+
+                    })
+                    .error(function () {
+                        $(".alert-danger").show();
+
+                        setTimeout(function () {
+                            $(".alert-danger").hide();
+                        }, 2000);
+                    });
+
+                return false;
+            });
+
+            $(".slideShow").cycle({ fx: 'fade' });
+
+        });
+    </script>
+}
+

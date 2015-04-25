@@ -1,0 +1,24 @@
+﻿
+<div class="newsContainer">
+    <ul id="js-news" class="js-hidden">
+       
+        @{
+            List<FlexRental.Models.NewsViewModel> news = (List<FlexRental.Models.NewsViewModel>)Session["news"];
+            if (null == Session["news"])
+        {
+            <li class="news-item"><a href="#">This is the 1st latest item.</a></li>
+            <li class="news-item"><a href="#">This is the 2nd latest item.</a></li>
+            <li class="news-item"><a href="#">This is the 3rd latest item.</a></li>
+            <li class="news-item"><a href="#">This is the 4th latest item.</a></li>
+        }
+        else
+        {
+            foreach(var item in news)
+            {
+              
+                <li class="news-item">@Html.ActionLink(item.name, "Details", "Buyer", new { id = item.InventoryId},null)</li>
+            }
+        }
+}
+    </ul>
+</div>

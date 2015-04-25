@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Scripts/side-shopping-cart/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    <link href="~/Scripts/jquery_news_ticker/styles/ticker-style.css" rel="stylesheet" type="text/css" media="screen" />
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    <script type="text/javascript" src="~/Scripts/side-shopping-cart/js/main.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/side-shopping-cart/js/modernizr.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery_news_ticker/includes/jquery.ticker.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#js-news').ticker();
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("FlexRental", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Category<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Furnitures", "Search", "Buyer", new { Search = "Furniture" }, null)</li>
+                            <li>@Html.ActionLink("Electronics", "Search", "Buyer", new { Search = "Electronic" }, null)</li>
+                            <li>@Html.ActionLink("Automobiles", "Search", "Buyer", new { Search = "Automobile" }, null)</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+                @using (Html.BeginForm("Search", "Buyer", FormMethod.Post))
+                {
+                    <input id="search" class="searchBox" name="search" type="text" placeholder="Search by name" />
+                    //@Html.TextBox("Search", "Search by name", new { @class = "searchBox" });
+                    <input type="submit" value="Search" class="btn btn-default" />
+                }
+            </div>
+
+        </div>
+    </div>
+
+    @Html.Partial("newItems")
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - FlexRental</p>
+        </footer>
+    </div>
+
+    @RenderSection("scripts", required: false)
+    @RenderSection("PageScripts", required: false)
+
+    @Html.Partial("CheckOut")
+    <div id="cd-shadow-layer" class=""></div>
+    <div id="cd-cart">
+        <h2 class="cardTitle">Cart</h2>
+        <div id="mainCartPart">
+            @{
+                List<FlexRental.Controllers.OrderItems> items = (List<FlexRental.Controllers.OrderItems>)Session["cart"];
+                decimal total = 0;
+                if (items != null)
+                {
+                    foreach (FlexRental.Controllers.OrderItems item in items)
+                    {
+                        var subtotal = item.Item.Price * item.Quantity;
+                        total = total + subtotal;
+                        <ul class="cd-cart-items">
+                            <li>
+                                <span class="cd-qty">@item.Quantity x</span> @Html.ActionLink((string)@item.Item.Name, "Details", "Buyer", new { id = @item.Item.InventoryId }, null)
+                                <div class="cd-price">$@(subtotal)</div>
+
+                                @*@using (Html.BeginForm("RemoveFromCart", "Buyer"))
+                                    {
+                                        @Html.Hidden("itemID", item.Item.InventoryId)
+                                        <input id="removeFromCart" type="submit" value="" class="cd-item-remove cd-img-replace" />
+                                    }
+                                    <a href=@Url.Content("~/Buyer/RemoveFromCart") class="cd-item-remove cd-img-replace">Remove</a>*@
+                            </li>
+                        </ul> <!-- cd-cart-items -->
+                    }
+                }
+                else
+                {
+                    <ul class="cd-cart-items">
+                        <li>Empty</li>
+                    </ul> <!-- cd-cart-items -->
+                }
+                <div class="cd-cart-total">
+                    <p>Total <span>$@(total)</span></p>
+                </div> <!-- cd-cart-total -->
+            }
+        </div>
+
+        <a id="checkout_trigger" class="checkout-btn">Checkout</a>
+
+        <p class="cd-go-to-cart">@Html.ActionLink("Go to the cart", "Cart", "Buyer")</p>
+    </div>
+
+</body>
+
+</html>

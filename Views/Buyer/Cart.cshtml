@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Cart";
+
+}
+
+<h2>Cart</h2>
+
+@{
+    List<FlexRental.Controllers.OrderItems>
+items = (List<FlexRental.Controllers.OrderItems>
+    )Session["cart"];
+    decimal total = 0;
+    if (items != null && items.Count >= 1)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Item Name
+                </th>
+                <th>
+                    Unit Price
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Sub-total
+                </th>
+                <th>
+                    
+                </th>
+            </tr>
+            @foreach (FlexRental.Controllers.OrderItems item in items)
+            {
+                var subtotal = item.Quantity * item.Item.Price;
+                total = total + subtotal;
+                <tr>
+                    <td style="padding-top:15px; width: 25% ">@Html.ActionLink((string)@item.Item.Name, "Details", "Buyer", new { id  = @item.Item.InventoryId}, null)</td>
+
+                    <td style="padding-top:15px; width: 25%"> @item.Item.Price</td>
+
+                    <td id="updateQtyForm" style="width: 28%">
+                        @using (Html.BeginForm("updateQtyForCart", "Buyer"))
+                        {
+                            @Html.Hidden("itemID", item.Item.InventoryId)
+                            <span>
+                                <input id="updateAmount" name="updateAmount" type="text" style="text-align: center" placeholder="Enter Quantity" value=@item.Quantity />
+                                @Html.ValidationMessage("amount")
+                            </span>
+                            <span style="margin-left:5px">
+                                <input id="updateQty" type="submit" value="Update" class="btn btn-default" />
+                            </span>
+                        }
+                    </td>
+                    <td style="padding-top:15px; width: 15% ">$@subtotal</td>
+                    <td>@Html.ActionLink("Remove", "RemoveItem", new { itemID  = item.Item.InventoryId}, new { @class = "item-remove img-replace" })
+                      </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="5" align="right"><strong><font size="5"> Total: $@total</font></strong></td>
+            </tr>
+        </table>
+
+        <p>
+            <a id="checkout_trigger2" class="btn btn-default right">Proceed To Checkout &raquo;</a>
+        </p>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Item Name
+                </th>
+                <th>
+                    Unit Price
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Sub-total
+                </th>
+            </tr>
+            <tr>
+                <td colspan="4">You currently have an empty cart!</td>
+            </tr>
+        </table>
+    }
+
+}

@@ -1,0 +1,42 @@
+﻿
+    <!-- multistep form -->
+    <form id="msform">
+        <!-- progressbar -->
+        <ul id="progressbar">
+            <li class="active">Mailling Address</li>
+            <li>Payment Selection</li>
+            <li>Congraduations</li>
+        </ul>
+        <!-- fieldsets -->
+        <fieldset>
+            <h2 class="fs-title">Mailling Address</h2>
+            <input type="text" name="address" placeholder="Address" />
+            <input type="text" name="state" placeholder="State" />
+            <input type="text" name="zipcode" placeholder="Zip Code" />
+            <input type="button" name="next" class="next action-button" value="Next" />
+        </fieldset>
+        <fieldset>
+            <h2 class="fs-title">Payment Selection</h2>
+            <h3 class="fs-subtitle">Select the preferred payment</h3>
+            <input type="text" name="cardNum" placeholder="Card Number" />
+            <input type="text" name="expireDate" placeholder="Expire Date" />
+            <input type="text" name="cvs" placeholder="CVS" />
+            <input type="button" name="previous" class="previous action-button" value="Previous" />
+            <input type="button" name="next" class="next action-button" value="Next" />
+        </fieldset>
+        <fieldset>
+            <h2 class="fs-title">Congradulations!</h2>
+            <h3 class="fs-subtitle">You have successfully make the order! Following are your order information</h3>
+            <h3 class="fs-subtitle">Following are your order information</h3> 
+            <h3 class="fs-subtitle">Order Number: 123456789</h3> 
+            <h3 class="fs-subtitle">Expected Arrival Date: April 17th</h3> 
+            <input type="submit" name="submit" class="submit action-button" value="Submit" />
+</fieldset>
+    </form>
+
+@section PageScripts{
+<!-- jQuery -->
+<script src="http://thecodeplayer.com/uploads/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<!-- jQuery easing plugin -->
+<script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
+}
